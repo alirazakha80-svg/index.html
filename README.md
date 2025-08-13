@@ -1,64 +1,145 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Intellio Chat</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ChatGPT-Style Fullscreen Chat</title>
   <style>
-    html, body {
+    * {
       margin: 0;
       padding: 0;
-      height: 100%;
-      background: #f7f7f8;
-      font-family: Arial, sans-serif;
-    }
-
-    /* Container to center chat */
-    #chat-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      padding: 20px;
-      height: 100%;
       box-sizing: border-box;
     }
 
-    /* Chat box styling like ChatGPT */
-    #chat-container {
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      width: 900px;
-      height: calc(100vh - 40px);
-      overflow: hidden;
+    body {
+      height: 100vh;
+      display: flex;
+      background-color: #202123; /* ChatGPT dark background */
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background-color: #171717;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+      border-right: 1px solid #2a2a2a;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
+
+    /* Main Chat Area */
+    .chat-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    .messages {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .message {
+      max-width: 80%;
+      margin-bottom: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+    }
+
+    .bot {
+      background-color: #444654;
+      align-self: flex-start;
+    }
+
+    .user {
+      background-color: #10a37f;
+      align-self: flex-end;
+    }
+
+    /* Input area */
+    .input-area {
+      padding: 16px;
+      background-color: #343541;
+      display: flex;
+      gap: 10px;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      outline: none;
+      font-size: 16px;
+    }
+
+    .input-area button {
+      padding: 12px 20px;
+      background-color: #10a37f;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <div id="chat-wrapper">
-    <div id="chat-container"></div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>ChatGPT</h2>
+    <p>New chat</p>
+    <p>Search chats</p>
+    <p>Library</p>
   </div>
 
-  <script type="text/javascript">
-    function loadChat() {
-      window.voiceflow.chat.load({
-        verify: { projectID: '689c3b1e9d300c90a54798bf' },
-        url: 'https://general-runtime.voiceflow.com',
-        versionID: 'production',
-        render: { mode: 'embedded', target: document.getElementById("chat-container") },
-        autostart: true
-      });
-    }
+  <!-- Chat Area -->
+  <div class="chat-container">
+    <div class="messages" id="messages">
+      <div class="message bot">Hi! How can I help you today?</div>
+      <div class="message user">Hello! I want to build a chat UI.</div>
+    </div>
+    <div class="input-area">
+      <input type="text" placeholder="Type a message..." id="userInput">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
 
-    window.addEventListener("DOMContentLoaded", function() {
-      var v = document.createElement("script");
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
-      v.type = "text/javascript";
-      v.async = true;
-      v.onload = loadChat;
-      document.head.appendChild(v);
-    });
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const messages = document.getElementById('messages');
+
+      if (input.value.trim() === '') return;
+
+      // User message
+      const userMsg = document.createElement('div');
+      userMsg.classList.add('message', 'user');
+      userMsg.textContent = input.value;
+      messages.appendChild(userMsg);
+
+      // Auto bot reply
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.classList.add('message', 'bot');
+        botMsg.textContent = "This is a bot reply.";
+        messages.appendChild(botMsg);
+        messages.scrollTop = messages.scrollHeight;
+      }, 600);
+
+      input.value = '';
+      messages.scrollTop = messages.scrollHeight;
+    }
   </script>
+
 </body>
 </html>
