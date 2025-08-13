@@ -28,21 +28,22 @@
     function forceFullScreen() {
       const style = document.createElement('style');
       style.innerHTML = `
-        iframe,
-        .vf-chat,
-        .vf-chat--embedded,
-        .vf-chat__container,
-        .vf-chat__content {
+        /* Force all Voiceflow containers full width */
+        body, html, #chat-container,
+        iframe, .vf-chat, .vf-chat--embedded, .vf-chat__container,
+        .vf-chat__content, .vf-chat__body, .vf-chat__messages {
           width: 100% !important;
           max-width: 100% !important;
           height: 100% !important;
           margin: 0 !important;
+          padding: 0 !important;
           border-radius: 0 !important;
+          box-shadow: none !important;
         }
-        .vf-chat__messages,
-        .vf-chat__body {
-          padding-left: 0 !important;
-          padding-right: 0 !important;
+        
+        /* Remove white space around */
+        .vf-chat__container {
+          background: white !important;
         }
       `;
       document.head.appendChild(style);
@@ -57,7 +58,7 @@
         autostart: true
       });
 
-      // Keep forcing styles in case Voiceflow resets them
+      // Keep overriding styles to beat Voiceflow's CSS
       setInterval(forceFullScreen, 500);
     }
 
