@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChatGPT-Style Fullscreen Chat</title>
+  <title>Intellio-Style Chat</title>
   <style>
     * {
       margin: 0;
@@ -12,36 +12,38 @@
     }
 
     body {
-      height: 100vh;
-      display: flex;
-      background-color: #202123; /* ChatGPT dark background */
-      color: white;
+      background-color: #f5f5f5;
       font-family: Arial, sans-serif;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 260px;
-      background-color: #171717;
       display: flex;
-      flex-direction: column;
+      justify-content: center;
       padding: 20px;
-      border-right: 1px solid #2a2a2a;
     }
 
-    .sidebar h2 {
-      margin-bottom: 20px;
-      font-size: 18px;
-    }
-
-    /* Main Chat Area */
-    .chat-container {
-      flex: 1;
+    .chat-wrapper {
+      background-color: white;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 900px;
+      height: 90vh;
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      overflow: hidden;
     }
 
+    /* Header */
+    .chat-header {
+      background-color: #6e6e6e;
+      color: white;
+      padding: 15px;
+      font-weight: bold;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Messages area */
     .messages {
       flex: 1;
       padding: 20px;
@@ -49,97 +51,40 @@
     }
 
     .message {
-      max-width: 80%;
-      margin-bottom: 12px;
+      max-width: 70%;
       padding: 12px 16px;
-      border-radius: 8px;
+      border-radius: 20px;
+      margin-bottom: 12px;
+      font-size: 15px;
+      line-height: 1.4;
     }
 
     .bot {
-      background-color: #444654;
+      background-color: #f0f0f0;
       align-self: flex-start;
     }
 
     .user {
-      background-color: #10a37f;
+      background-color: #6e6e6e;
+      color: white;
       align-self: flex-end;
     }
 
     /* Input area */
     .input-area {
-      padding: 16px;
-      background-color: #343541;
+      padding: 12px;
       display: flex;
       gap: 10px;
+      border-top: 1px solid #ddd;
     }
 
     .input-area input {
       flex: 1;
       padding: 12px;
-      border: none;
-      border-radius: 6px;
+      border: 1px solid #ccc;
+      border-radius: 20px;
       outline: none;
-      font-size: 16px;
+      font-size: 14px;
     }
 
-    .input-area button {
-      padding: 12px 20px;
-      background-color: #10a37f;
-      border: none;
-      border-radius: 6px;
-      color: white;
-      cursor: pointer;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>ChatGPT</h2>
-    <p>New chat</p>
-    <p>Search chats</p>
-    <p>Library</p>
-  </div>
-
-  <!-- Chat Area -->
-  <div class="chat-container">
-    <div class="messages" id="messages">
-      <div class="message bot">Hi! How can I help you today?</div>
-      <div class="message user">Hello! I want to build a chat UI.</div>
-    </div>
-    <div class="input-area">
-      <input type="text" placeholder="Type a message..." id="userInput">
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
-
-  <script>
-    function sendMessage() {
-      const input = document.getElementById('userInput');
-      const messages = document.getElementById('messages');
-
-      if (input.value.trim() === '') return;
-
-      // User message
-      const userMsg = document.createElement('div');
-      userMsg.classList.add('message', 'user');
-      userMsg.textContent = input.value;
-      messages.appendChild(userMsg);
-
-      // Auto bot reply
-      setTimeout(() => {
-        const botMsg = document.createElement('div');
-        botMsg.classList.add('message', 'bot');
-        botMsg.textContent = "This is a bot reply.";
-        messages.appendChild(botMsg);
-        messages.scrollTop = messages.scrollHeight;
-      }, 600);
-
-      input.value = '';
-      messages.scrollTop = messages.scrollHeight;
-    }
-  </script>
-
-</body>
-</html>
+    .input-ar
