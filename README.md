@@ -3,52 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Intellio - AI Chatbot</title>
+  <title>Intellio Chat</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
-      width: 100%;
-      background: #fff;
+      background: #f7f7f8;
       font-family: Arial, sans-serif;
+    }
+
+    /* Container to center chat */
+    #chat-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 20px;
+      height: 100%;
+      box-sizing: border-box;
+    }
+
+    /* Chat box styling like ChatGPT */
+    #chat-container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      width: 900px;
+      height: calc(100vh - 40px);
       overflow: hidden;
     }
-
-    #chat-container {
-      height: 100vh;
-      width: 100vw;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Force Voiceflow widget to full width & height */
-    iframe,
-    .vf-chat,
-    .vf-chat--embedded,
-    .vf-chat__container,
-    .vf-chat__content {
-      width: 100% !important;
-      max-width: 100% !important;
-      height: 100% !important;
-      margin: 0 !important;
-      border-radius: 0 !important;
-    }
-
-    /* Remove inner chat padding so it touches screen edges */
-    .vf-chat__messages,
-    .vf-chat__body {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
-    }
   </style>
-  <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
 </head>
 <body>
 
-  <!-- Chat Window -->
-  <div id="chat-container"></div>
-  
+  <div id="chat-wrapper">
+    <div id="chat-container"></div>
+  </div>
+
   <script type="text/javascript">
     function loadChat() {
       window.voiceflow.chat.load({
