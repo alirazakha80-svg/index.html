@@ -3,60 +3,50 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChatGPT-Style Fullscreen Chat</title>
+  <title>AI Chat</title>
   <style>
-    * {
+    /* Remove all browser default margins */
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      height: 100vh;
-      display: flex;
-      background-color: #202123; /* ChatGPT dark background */
-      color: white;
+      height: 100%;
+      background-color: #202123; /* Dark background like ChatGPT */
       font-family: Arial, sans-serif;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 260px;
-      background-color: #171717;
       display: flex;
       flex-direction: column;
-      padding: 20px;
-      border-right: 1px solid #2a2a2a;
     }
 
-    .sidebar h2 {
-      margin-bottom: 20px;
-      font-size: 18px;
-    }
-
-    /* Main Chat Area */
-    .chat-container {
+    /* Chat container full height */
+    #chat-container {
       flex: 1;
       display: flex;
       flex-direction: column;
-      height: 100vh;
+      justify-content: space-between;
+      max-width: 900px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+      color: white;
     }
 
-    .messages {
+    /* Messages area */
+    #messages {
       flex: 1;
-      padding: 20px;
       overflow-y: auto;
+      padding-bottom: 20px;
     }
 
     .message {
-      max-width: 80%;
-      margin-bottom: 12px;
-      padding: 12px 16px;
+      padding: 10px 15px;
+      margin: 8px 0;
       border-radius: 8px;
+      max-width: 80%;
+      word-wrap: break-word;
     }
 
     .bot {
-      background-color: #444654;
+      background-color: #343541;
       align-self: flex-start;
     }
 
@@ -65,81 +55,73 @@
       align-self: flex-end;
     }
 
-    /* Input area */
-    .input-area {
-      padding: 16px;
-      background-color: #343541;
+    /* Input area fixed at bottom */
+    #input-area {
       display: flex;
       gap: 10px;
+      padding: 10px;
+      background-color: #343541;
+      border-radius: 8px;
     }
 
-    .input-area input {
+    #user-input {
       flex: 1;
-      padding: 12px;
+      padding: 10px;
       border: none;
-      border-radius: 6px;
+      border-radius: 5px;
       outline: none;
       font-size: 16px;
     }
 
-    .input-area button {
-      padding: 12px 20px;
+    button {
       background-color: #10a37f;
-      border: none;
-      border-radius: 6px;
       color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 5px;
       cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0e8f6e;
     }
   </style>
 </head>
 <body>
+  <div id="chat-container">
+    <div id="messages"></div>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>ChatGPT</h2>
-    <p>New chat</p>
-    <p>Search chats</p>
-    <p>Library</p>
-  </div>
-
-  <!-- Chat Area -->
-  <div class="chat-container">
-    <div class="messages" id="messages">
-      <div class="message bot">Hi! How can I help you today?</div>
-      <div class="message user">Hello! I want to build a chat UI.</div>
-    </div>
-    <div class="input-area">
-      <input type="text" placeholder="Type a message..." id="userInput">
+    <div id="input-area">
+      <input type="text" id="user-input" placeholder="Type your message...">
       <button onclick="sendMessage()">Send</button>
     </div>
   </div>
 
   <script>
+    const messagesDiv = document.getElementById("messages");
+    const userInput = document.getElementById("user-input");
+
     function sendMessage() {
-      const input = document.getElementById('userInput');
-      const messages = document.getElementById('messages');
+      const text = userInput.value.trim();
+      if (text === "") return;
 
-      if (input.value.trim() === '') return;
+      // Add user message
+      addMessage(text, "user");
+      userInput.value = "";
 
-      // User message
-      const userMsg = document.createElement('div');
-      userMsg.classList.add('message', 'user');
-      userMsg.textContent = input.value;
-      messages.appendChild(userMsg);
-
-      // Auto bot reply
+      // Simulate bot response
       setTimeout(() => {
-        const botMsg = document.createElement('div');
-        botMsg.classList.add('message', 'bot');
-        botMsg.textContent = "This is a bot reply.";
-        messages.appendChild(botMsg);
-        messages.scrollTop = messages.scrollHeight;
-      }, 600);
+        addMessage("This is a bot reply.", "bot");
+      }, 500);
+    }
 
-      input.value = '';
-      messages.scrollTop = messages.scrollHeight;
+    function addMessage(text, sender) {
+      const msg = document.createElement("div");
+      msg.className = `message ${sender}`;
+      msg.innerText = text;
+      messagesDiv.appendChild(msg);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
     }
   </script>
-
 </body>
 </html>
