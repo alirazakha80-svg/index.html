@@ -27,11 +27,12 @@
 
     .vf-chat__messages { overscroll-behavior: contain; }
 
-    /* Footer credit */
+    /* Footer credit centered */
     #footer {
       position: fixed;
       bottom: 5px;
-      right: 10px;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 12px;
       color: #666;
       background: rgba(255,255,255,0.8);
