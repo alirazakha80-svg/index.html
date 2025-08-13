@@ -14,9 +14,12 @@
       font-family: Arial, sans-serif;
       overflow: hidden;
     }
+
     #chat-container {
       height: calc(100vh - 50px);
       width: 100vw;
+      padding: 0;
+      margin: 0;
     }
 
     /* New Chat button styling */
@@ -33,21 +36,24 @@
       background: #0e8f6f;
     }
 
-    /* Force Voiceflow widget to use full width */
+    /* Force Voiceflow widget to take full width */
     iframe, 
     .vf-chat,
     .vf-chat--embedded,
-    .vf-chat__container {
+    .vf-chat__container,
+    .vf-chat__content {
       width: 100% !important;
-      height: 100% !important;
       max-width: 100% !important;
       margin: 0 !important;
       border-radius: 0 !important;
+      height: 100% !important;
     }
 
-    /* Optional: match ChatGPT light mode background */
-    .vf-chat__container {
-      background-color: #ffffff !important;
+    /* Remove inner white space */
+    .vf-chat__messages,
+    .vf-chat__body {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
   </style>
   <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
