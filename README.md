@@ -9,25 +9,30 @@
       margin: 0;
       padding: 0;
       height: 100%;
-      background: #f5f5f5;
-      font-family: Arial, sans-serif;
-    }
-
-    /* Center the chat box */
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    #chat-wrapper {
-      background: #fff;
-      border-radius: 12px;
       width: 100%;
-      max-width: 900px;
-      height: 90vh;
+      background: #fff;
+      font-family: Arial, sans-serif;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
     }
 
-    /* Force Voic*
+    #chat-container {
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Make Voiceflow widget take entire viewport */
+    iframe,
+    .vf-chat,
+    .vf-chat--embedded,
+    .vf-chat__container,
+    .vf-chat__content {
+      width: 100% !important;
+      height: 100% !important;
+      border-radius: 0 !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+
+    /* Remove*
