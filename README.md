@@ -10,14 +10,20 @@
       padding: 0;
       height: 100%;
       width: 100%;
-      overflow: hidden;
       background-color: #f9f9f9;
       font-family: Arial, sans-serif;
     }
 
+    /* Make sure the body takes full screen with flexbox */
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
     #chat-container {
-      height: 100%;
+      flex: 1; /* Take all remaining height */
       width: 100%;
+      height: 100%;
     }
   </style>
 </head>
@@ -33,4 +39,14 @@
       script.onload = function() {
         window.voiceflow.chat.load({
           verify: { projectID: '689c3b1e9d300c90a54798bf' },
-          url: 'https://general-runtim
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production',
+          render: { mode: 'embedded', target: document.getElementById("chat-container") },
+          autostart: true
+        });
+      };
+      document.body.appendChild(script);
+    });
+  </script>
+</body>
+</html>
