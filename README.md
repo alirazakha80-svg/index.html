@@ -5,20 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Intellio - AI Chatbot</title>
   <style>
-    body, html {
+    html, body {
       margin: 0;
       padding: 0;
       height: 100%;
+      width: 100%;
       font-family: Arial, sans-serif;
-      background: #f9f9f9;
-      display: flex;
-      flex-direction: column;
+      background: #fff;
     }
 
     #chat-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+      height: 100%;
+      width: 100%;
     }
 
     footer {
@@ -29,12 +27,9 @@
       background-color: #f1f1f1;
     }
   </style>
-
-  <!-- Preload Voiceflow widget -->
   <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
 </head>
 <body>
-  
   <div id="chat-container"></div>
 
   <footer>Powered by Ali Raza</footer>
@@ -47,4 +42,15 @@
       v.async = true;
       v.onload = function() {
         window.voiceflow.chat.load({
-          verify
+          verify: { projectID: '689c3b1e9d300c90a54798bf' },
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production',
+          render: { mode: 'embedded', target: document.getElementById("chat-container") },
+          autostart: true
+        });
+      };
+      document.head.appendChild(v);
+    });
+  </script>
+</body>
+</html>
