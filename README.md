@@ -110,36 +110,4 @@
     </div>
     <div class="input-area">
       <input type="text" placeholder="Type a message..." id="userInput">
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
-
-  <script>
-    function sendMessage() {
-      const input = document.getElementById('userInput');
-      const messages = document.getElementById('messages');
-
-      if (input.value.trim() === '') return;
-
-      // User message
-      const userMsg = document.createElement('div');
-      userMsg.classList.add('message', 'user');
-      userMsg.textContent = input.value;
-      messages.appendChild(userMsg);
-
-      // Auto bot reply
-      setTimeout(() => {
-        const botMsg = document.createElement('div');
-        botMsg.classList.add('message', 'bot');
-        botMsg.textContent = "This is a bot reply.";
-        messages.appendChild(botMsg);
-        messages.scrollTop = messages.scrollHeight;
-      }, 600);
-
-      input.value = '';
-      messages.scrollTop = messages.scrollHeight;
-    }
-  </script>
-
-</body>
-</html>
+      <button onclick="
