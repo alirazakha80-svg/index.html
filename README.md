@@ -12,27 +12,18 @@
       width: 100%;
       background-color: #f9f9f9;
       font-family: Arial, sans-serif;
-      overflow: hidden; /* No scrollbars */
     }
 
+    /* Make sure the body takes full screen with flexbox */
     body {
       display: flex;
       flex-direction: column;
     }
 
     #chat-container {
-      flex: 1;
+      flex: 1; /* Take all remaining height */
       width: 100%;
-      height: 100vh; /* Always match viewport height */
-      display: flex;
-    }
-
-    /* Force Voiceflow iframe to behave like a full app */
-    #chat-container iframe {
-      flex: 1;
-      width: 100% !important;
-      height: 100% !important;
-      border: none;
+      height: 100%;
     }
   </style>
 </head>
@@ -43,7 +34,7 @@
     window.addEventListener("DOMContentLoaded", function() {
       const script = document.createElement("script");
       script.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
-      script.type = "module";
+      script.type = "module"; // must be module for Voiceflow
       script.async = true;
       script.onload = function() {
         window.voiceflow.chat.load({
@@ -54,6 +45,11 @@
           autostart: true
         });
       };
+      document.body.appendChild(script);
+    });
+  </script>
+</body>
+</html>
       document.body.appendChild(script);
     });
   </script>
