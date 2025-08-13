@@ -22,7 +22,7 @@
       padding: 0;
     }
 
-    /* Force Voiceflow widget to full width & height */
+    /* Force Voiceflow widget to fill screen */
     iframe,
     .vf-chat,
     .vf-chat--embedded,
@@ -35,17 +35,11 @@
       border-radius: 0 !important;
     }
 
-    /* Override Voiceflow's built-in centered layout */
-    .vf-chat__container {
-      display: flex !important;
-      justify-content: stretch !important;
-      align-items: stretch !important;
-    }
-
-    /* Remove inner chat padding so it touches screen edges */
+    /* Remove extra padding inside chat */
     .vf-chat__messages,
     .vf-chat__body {
-      padding: 0 !important;
+      padding-left: 0 !important;
+      padding-right: 0 !important;
     }
   </style>
   <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
@@ -75,5 +69,6 @@
       document.head.appendChild(v);
     });
   </script>
+
 </body>
 </html>
