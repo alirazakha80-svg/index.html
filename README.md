@@ -12,16 +12,18 @@
       width: 100%;
       background: #fff;
       font-family: Arial, sans-serif;
+      overflow: hidden; /* remove scrollbars */
     }
     #chat-container {
-      height: 100%;
-      width: 100%;
+      height: 100vh;  /* full height */
+      width: 100vw;   /* full width */
     }
   </style>
   <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
 </head>
 <body>
   <div id="chat-container"></div>
+  
   <script type="text/javascript">
     window.addEventListener("DOMContentLoaded", function() {
       var v = document.createElement("script");
@@ -42,3 +44,4 @@
   </script>
 </body>
 </html>
+
