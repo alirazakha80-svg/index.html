@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your AI Agent</title>
+  <title>Intellio - AI Chatbot</title>
   <style>
     body, html {
       margin: 0;
       padding: 0;
       height: 100%;
-      background: #fff;
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
       display: flex;
       flex-direction: column;
     }
+
     #chat-container {
       flex: 1;
+      display: flex;
+      flex-direction: column;
     }
+
     footer {
       text-align: center;
       padding: 10px;
@@ -24,16 +29,17 @@
       background-color: #f1f1f1;
     }
   </style>
-  <!-- Preload the Voiceflow script for faster execution -->
+
+  <!-- Preload Voiceflow widget -->
   <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
 </head>
 <body>
+  
   <div id="chat-container"></div>
 
   <footer>Powered by Ali Raza</footer>
 
   <script type="text/javascript">
-    // Load script asynchronously as soon as possible
     window.addEventListener("DOMContentLoaded", function() {
       var v = document.createElement("script");
       v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
@@ -41,9 +47,4 @@
       v.async = true;
       v.onload = function() {
         window.voiceflow.chat.load({
-          verify: { projectID: '689c3b1e9d300c90a54798bf' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          voice: { url: "https://runtime-api.voiceflow.com" },
-          render: { mode: 'embedded', target: document.getElementById("chat-container") },
-          autostart: true // starts the bot without waiting for user input
+          verify
