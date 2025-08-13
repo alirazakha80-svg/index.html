@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Intellio - AI Chatbot</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intellio</title>
   <style>
     html, body {
       margin: 0;
@@ -11,19 +11,19 @@
       height: 100%;
       width: 100%;
       background: #fff;
-      font-family: Arial, sans-serif;
+      overflow: hidden;
     }
-
-    #chat-container {
-      height: 100%;
+    iframe {
       width: 100%;
+      height: 100%;
+      border: none;
     }
+  </style>
+</head>
+<body>
 
-    /* Force Voiceflow widget to full width & height without gray header */
-    iframe,
-    .vf-chat,
-    .vf-chat--embedded,
-    .vf-chat__container,
-    .vf-chat__content {
-      width: 100% !important;
-      height: 100%
+  <!-- Replace the src URL with your actual Voiceflow share link -->
+  <iframe src="https://your-voiceflow-share-link.com" allow="microphone"></iframe>
+
+</body>
+</html>
