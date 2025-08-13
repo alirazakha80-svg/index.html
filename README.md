@@ -27,19 +27,18 @@
 
     .vf-chat__messages { overscroll-behavior: contain; }
 
-    /* Footer credit centered and on top */
+    /* Footer credit */
     #footer {
       position: fixed;
-      bottom: 10px;
-      left: 50%;
-      transform: translateX(-50%);
+      bottom: 5px;
+      right: 10px;
       font-size: 12px;
       color: #666;
-      background: rgba(255,255,255,0.9);
+      background: rgba(255,255,255,0.8);
       padding: 4px 8px;
       border-radius: 4px;
       font-family: Arial, sans-serif;
-      z-index: 999999; /* keep it above chatbot */
+      z-index: 9999;
     }
   </style>
   <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
@@ -62,4 +61,12 @@
         });
       }
       const s = document.createElement("script");
-      s.src = "htt
+      s.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+      s.async = true;
+      s.type = "text/javascript";
+      s.onload = boot;
+      document.head.appendChild(s);
+    })();
+  </script>
+</body>
+</html>
