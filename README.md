@@ -38,4 +38,36 @@
     /* Remove inner chat padding so it touches screen edges */
     .vf-chat__messages,
     .vf-chat__body {
-      padd
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  </style>
+  <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
+</head>
+<body>
+
+  <!-- Chat Window -->
+  <div id="chat-container"></div>
+  
+  <script type="text/javascript">
+    function loadChat() {
+      window.voiceflow.chat.load({
+        verify: { projectID: '689c3b1e9d300c90a54798bf' }, // Your Voiceflow Project ID
+        url: 'https://general-runtime.voiceflow.com',
+        versionID: 'production',
+        render: { mode: 'embedded', target: document.getElementById("chat-container") },
+        autostart: true
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", function() {
+      var v = document.createElement("script");
+      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+      v.type = "text/javascript";
+      v.async = true;
+      v.onload = loadChat;
+      document.head.appendChild(v);
+    });
+  </script>
+</body>
+</html>
