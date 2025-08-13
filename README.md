@@ -14,42 +14,40 @@
       font-family: Arial, sans-serif;
       overflow: hidden;
     }
-
     #chat-container {
       height: 100vh;
       width: 100vw;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Force Voiceflow widget to full width & height */
-    iframe,
-    .vf-chat,
-    .vf-chat--embedded,
-    .vf-chat__container,
-    .vf-chat__content {
-      width: 100% !important;
-      max-width: 100% !important;
-      height: 100% !important;
-      margin: 0 !important;
-      border-radius: 0 !important;
-    }
-
-    /* Remove inner chat padding so it touches screen edges */
-    .vf-chat__messages,
-    .vf-chat__body {
-      padding-left: 0 !important;
-      padding-right: 0 !important;
     }
   </style>
-  <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
 </head>
 <body>
 
-  <!-- Chat Window -->
   <div id="chat-container"></div>
   
   <script type="text/javascript">
+    function forceFullScreen() {
+      const style = document.createElement('style');
+      style.innerHTML = `
+        iframe,
+        .vf-chat,
+        .vf-chat--embedded,
+        .vf-chat__container,
+        .vf-chat__content {
+          width: 100% !important;
+          max-width: 100% !important;
+          height: 100% !important;
+          margin: 0 !important;
+          border-radius: 0 !important;
+        }
+        .vf-chat__messages,
+        .vf-chat__body {
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+        }
+      `;
+      document.head.appendChild(style);
+    }
+
     function loadChat() {
       window.voiceflow.chat.load({
         verify: { projectID: '689c3b1e9d300c90a54798bf' },
@@ -58,6 +56,9 @@
         render: { mode: 'embedded', target: document.getElementById("chat-container") },
         autostart: true
       });
+
+      // Keep forcing styles in case Voiceflow resets them
+      setInterval(forceFullScreen, 500);
     }
 
     window.addEventListener("DOMContentLoaded", function() {
