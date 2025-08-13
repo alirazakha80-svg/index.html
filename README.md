@@ -10,20 +10,14 @@
       padding: 0;
       height: 100%;
       width: 100%;
+      overflow: hidden;
       background-color: #f9f9f9;
       font-family: Arial, sans-serif;
     }
 
-    /* Make sure the body takes full screen with flexbox */
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-
     #chat-container {
-      flex: 1; /* Take all remaining height */
-      width: 100%;
       height: 100%;
+      width: 100%;
     }
   </style>
 </head>
