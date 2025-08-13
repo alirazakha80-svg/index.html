@@ -1,90 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Intellio-Style Chat</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intellio - AI Chatbot</title>
   <style>
-    * {
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: #f5f5f5;
-      font-family: Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .chat-wrapper {
-      background-color: white;
-      border-radius: 12px;
+      height: 100%;
       width: 100%;
-      max-width: 900px;
-      height: 90vh;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      background: #fff;
+      font-family: Arial, sans-serif;
       overflow: hidden;
     }
 
-    /* Header */
-    .chat-header {
-      background-color: #6e6e6e;
-      color: white;
-      padding: 15px;
-      font-weight: bold;
-      font-size: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
+    #chat-container {
+      height: 100vh;
+      width: 100vw;
+      margin: 0;
+      padding: 0;
     }
 
-    /* Messages area */
-    .messages {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
+    /* Force Voiceflow widget to full width & height */
+    iframe,
+    .vf-chat,
+    .vf-chat--embedded,
+    .vf-chat__container,
+    .vf-chat__content {
+      width: 100% !important;
+      max-width: 100% !important;
+      height: 100% !important;
+      margin: 0 !important;
+      border-radius: 0 !important;
     }
 
-    .message {
-      max-width: 70%;
-      padding: 12px 16px;
-      border-radius: 20px;
-      margin-bottom: 12px;
-      font-size: 15px;
-      line-height: 1.4;
+    /* Remove inner chat padding so it touches screen edges */
+    .vf-chat__messages,
+    .vf-chat__body {
+      padding-left: 0 !important;
+      padding-right: 0 !important;
+    }
+  </style>
+  <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
+</head>
+<body>
+
+  <!-- Chat Window -->
+  <div id="chat-container"></div>
+  
+  <script type="text/javascript">
+    function loadChat() {
+      window.voiceflow.chat.load({
+        verify: { projectID: '689c3b1e9d300c90a54798bf' },
+        url: 'https://general-runtime.voiceflow.com',
+        versionID: 'production',
+        render: { mode: 'embedded', target: document.getElementById("chat-container") },
+        autostart: true
+      });
     }
 
-    .bot {
-      background-color: #f0f0f0;
-      align-self: flex-start;
-    }
-
-    .user {
-      background-color: #6e6e6e;
-      color: white;
-      align-self: flex-end;
-    }
-
-    /* Input area */
-    .input-area {
-      padding: 12px;
-      display: flex;
-      gap: 10px;
-      border-top: 1px solid #ddd;
-    }
-
-    .input-area input {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 20px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    .input-ar
+    window.addEventListener("DOMContentLoaded", function() {
+      var v = document.createElement("script");
+      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+      v.type = "text/javascript";
+      v.async = true;
+      v.onload = loadChat;
+      document.head.appendChild(v);
+    });
+  </script>
+</body>
+</html>
