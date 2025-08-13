@@ -50,8 +50,4 @@
   </script>
 </body>
 </html>
-      document.body.appendChild(script);
-    });
-  </script>
-</body>
-</html>
+
