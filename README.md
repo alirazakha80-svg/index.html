@@ -6,14 +6,11 @@
   <title>Intellio – AI Chatbot</title>
   <meta name="color-scheme" content="light dark" />
   <style>
-    /* Full-screen canvas for the chat */
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
-    /* use svh to behave better on mobile address bars */
     body { height: 100svh; background: #ffffff; font-family: Arial, Helvetica, sans-serif; overflow: hidden; }
     #chat { position: fixed; inset: 0; }
 
-    /* Stretch the Voiceflow embed to 100% and remove popup styling */
     .vf-chat,
     .vf-chat--embedded,
     .vf-chat__container,
@@ -28,18 +25,27 @@
       margin: 0 !important;
     }
 
-    /* Keep the VF header visible (for mic/restart icons) */
-    /* Do NOT hide .vf-chat__header */
-
-    /* Make sure messages area can scroll while footer stays at bottom */
     .vf-chat__messages { overscroll-behavior: contain; }
-  </style>
 
-  <!-- Preload for faster load -->
+    /* Footer credit */
+    #footer {
+      position: fixed;
+      bottom: 5px;
+      right: 10px;
+      font-size: 12px;
+      color: #666;
+      background: rgba(255,255,255,0.8);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      z-index: 9999;
+    }
+  </style>
   <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
 </head>
 <body>
   <div id="chat" aria-label="Intellio chat" role="application"></div>
+  <div id="footer">Powered by Ali Raza</div>
 
   <script>
     (function () {
@@ -51,7 +57,6 @@
           versionID:"production",
           render:   { mode: "embedded", target: document.getElementById("chat") },
           autostart:true,
-          // Keep voice enabled so the MIC appears on desktop
           voice: { url: "https://runtime-api.voiceflow.com" }
         });
       }
