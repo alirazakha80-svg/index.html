@@ -1,58 +1,25 @@
-# intellio
-student chatbot
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Your AI Agent</title>
-  <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #fff;
-      display: flex;
-      flex-direction: column;
-    }
-    #chat-container {
-      flex: 1;
-    }
-    footer {
-      text-align: center;
-      padding: 10px;
-      font-size: 14px;
-      color: #555;
-      background-color: #f1f1f1;
-    }
-  </style>
-  <!-- Preload the Voiceflow script for faster execution -->
-  <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
-</head>
-<body>
-  <div id="chat-container"></div>
+# Student Chatbot
 
-  <footer>Powered by Ali Raza</footer>
+This is a simple AI chatbot for students built using **HTML** and the **Voiceflow API**. The chatbot provides interactive responses to assist students with their queries.
 
-  <script type="text/javascript">
-    // Load script asynchronously as soon as possible
-    window.addEventListener("DOMContentLoaded", function() {
-      var v = document.createElement("script");
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
-      v.type = "text/javascript";
-      v.async = true;
-      v.onload = function() {
-        window.voiceflow.chat.load({
-          verify: { projectID: '689c3b1e9d300c90a54798bf' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          voice: { url: "https://runtime-api.voiceflow.com" },
-          render: { mode: 'embedded', target: document.getElementById("chat-container") },
-          autostart: true // starts the bot without waiting for user input
-        });
-      };
-      document.head.appendChild(v);
-    });
-  </script>
-</body>
-</html>
+## Features
+- Interactive AI chatbot embedded in a webpage.
+- Powered by Voiceflow for natural conversation.
+- Fully client-side, no backend required.
+- Responsive design for desktop and mobile.
+
+## How to Use
+1. Clone or download this repository.
+2. Open the `index.html` file in your web browser.
+3. The chatbot will automatically load in the chat container.
+
+## Live Demo
+You can view the chatbot live here:  
+[GitHub Pages Link](https://yourusername.github.io/your-repo-name/)  
+
+*(Replace with your actual GitHub Pages URL)*
+
+## Credits
+- Developed by **Ali Raza**
+- Chatbot powered by [Voiceflow](https://www.voiceflow.com/)
+
