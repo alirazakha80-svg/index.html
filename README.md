@@ -83,5 +83,16 @@
       document.head.appendChild(s);
     })();
   </script>
+<style>
+/* Remove the sender name/header from messages */
+.vf-chat__message-sender {
+  display: none !important;
+}
+
+/* Optional: tighten spacing after removing name */
+.vf-chat__message {
+  margin-top: 4px !important;
+}
+</style>
 </body>
 </html>
