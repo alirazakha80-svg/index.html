@@ -2,82 +2,71 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ali Raza - AI Chatbot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Intellio – AI Chatbot</title>
+  <meta name="color-scheme" content="light dark" />
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      background: #fff;
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { height: 100svh; background: #ffffff; font-family: Arial, Helvetica, sans-serif; overflow: hidden; }
+    #chat { position: fixed; inset: 0; }
 
-    #chat-container {
-      flex: 1;
-      height: 100%;
-      width: 100%;
-    }
-
-    iframe,
     .vf-chat,
     .vf-chat--embedded,
     .vf-chat__container,
-    .vf-chat__content {
+    .vf-chat__content,
+    .vf-chat__inner,
+    .vf-chat__body {
       width: 100% !important;
       height: 100% !important;
-      margin: 0 !important;
+      max-width: none !important;
       border-radius: 0 !important;
+      box-shadow: none !important;
+      margin: 0 !important;
     }
 
-    footer {
-      text-align: center;
-      padding: 10px;
-      font-size: 14px;
-      color: #555;
-      background-color: #f1f1f1;
-    }
+    .vf-chat__messages { overscroll-behavior: contain; }
 
-    @media (max-width: 768px) {
-      html, body {
-        height: 100%;
-      }
-      #chat-container {
-        height: calc(100% - 40px); /* leave space for footer */
-      }
+    /* Footer credit */
+    #footer {
+      position: fixed;
+      bottom: 5px;
+      right: 10px;
+      font-size: 12px;
+      color: #666;
+      background: rgba(255,255,255,0.8);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      z-index: 9999;
     }
   </style>
   <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
 </head>
 <body>
+  <div id="chat" aria-label="Intellio chat" role="application"></div>
+  <div id="footer">Powered by Ali Raza</div>
 
-  <div id="chat-container"></div>
-
-  <footer>Powered by Ali Raza</footer>
-
-  <script type="text/javascript">
-    function loadChat() {
-      window.voiceflow.chat.load({
-        verify: { projectID: '689c3b1e9d300c90a54798bf' },
-        url: 'https://general-runtime.voiceflow.com',
-        versionID: 'production',
-        render: { mode: 'embedded', target: document.getElementById("chat-container") },
-        autostart: true
-      });
-    }
-
-    window.addEventListener("DOMContentLoaded", function() {
-      var v = document.createElement("script");
-      v.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
-      v.type = "text/javascript";
-      v.async = true;
-      v.onload = loadChat;
-      document.head.appendChild(v);
-    });
+  <script>
+    (function () {
+      function boot() {
+        if (!window.voiceflow?.chat?.load) return;
+        window.voiceflow.chat.load({
+          verify:   { projectID: "689c3b1e9d300c90a54798bf" },
+          url:      "https://general-runtime.voiceflow.com",
+          versionID:"production",
+          render:   { mode: "embedded", target: document.getElementById("chat") },
+          autostart:true,
+          voice: { url: "https://runtime-api.voiceflow.com" }
+        });
+      }
+      const s = document.createElement("script");
+      s.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+      s.async = true;
+      s.type = "text/javascript";
+      s.onload = boot;
+      document.head.appendChild(s);
+    })();
   </script>
-
 </body>
 </html>
