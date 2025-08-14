@@ -64,6 +64,15 @@
       z-index: 9999;
     }
   </style>
+/* Remove black headline in messages */
+.vf-chat__message .vf-chat__message-author {
+    display: none !important;
+}
+
+/* Optional: fix padding so messages look cleaner without author name */
+.vf-chat__message {
+    padding-top: 2px !important;
+}
 </head>
 <body>
   <div id="loader">Loading chatbot...</div>
