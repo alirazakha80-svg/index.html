@@ -94,19 +94,5 @@
   margin-top: 4px !important;
 }
 </style>
-/* Fix message input background color */
-.vf-chat__input,
-.vf-chat__input input,
-.vf-chat__textarea,
-.vf-chat__textarea textarea {
-  background-color: #ffffff !important; /* white background */
-  color: #000000 !important; /* black text */
-}
-
-/* Optional: improve placeholder visibility */
-.vf-chat__input::placeholder,
-.vf-chat__textarea::placeholder {
-  color: #777 !important;
-}
 </body>
 </html>
