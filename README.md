@@ -63,4 +63,25 @@
   <script>
     (function () {
       function boot() {
-        if (!window.voiceflow?.chat?.lo
+        if (!window.voiceflow?.chat?.load) return;
+        window.voiceflow.chat.load({
+          verify: { projectID: "689c3b1e9d300c90a54798bf" },
+          url: "https://general-runtime.voiceflow.com",
+          versionID: "production",
+          render: { mode: "embedded", target: document.getElementById("chat") },
+          autostart: true,
+          voice: { url: "https://runtime-api.voiceflow.com" }
+        });
+        document.getElementById("loader").style.display = "none";
+        document.getElementById("chat").style.display = "block";
+      }
+      const s = document.createElement("script");
+      s.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+      s.async = true;
+      s.type = "text/javascript";
+      s.onload = boot;
+      document.head.appendChild(s);
+    })();
+  </script>
+</body>
+</html>
