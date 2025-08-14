@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, viewport-fit=cover"
-  />
-  <meta name="color-scheme" content="light dark" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Intellio – AI Chatbot</title>
+  <meta name="color-scheme" content="light dark" />
   <style>
-    /* --- Layout reset --- */
     * { box-sizing: border-box; }
     html, body { height: 100%; margin: 0; }
-    body {
-      height: 100dvh; /* good on mobile address-bar */
-      background: #ffffff;
-      font-family: Arial, Helvetica, sans-serif;
-      overflow: hidden;
+    body { height: 100svh; background: #ffffff; font-family: Arial, Helvetica, sans-serif; overflow: hidden; }
+
+    /* Hide chat until ready */
+    #chat { position: fixed; inset: 0; display: none; }
+
+    /* Loader styling */
+    #loader {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #555;
+      background: #fff;
     }
 
-    /* Chat host fills the screen */
-    #chat { position: fixed; inset: 0; }
-
-    /* Force Voiceflow widget full-bleed */
+    /* Voiceflow chat full size */
     .vf-chat,
     .vf-chat--embedded,
     .vf-chat__container,
@@ -36,36 +39,28 @@
       box-shadow: none !important;
       margin: 0 !important;
     }
-    .vf-chat__messages { overscroll-behavior: contain; }
 
-    /* Safe area for iOS bottom bar */
-    .vf-chat__footer,
-    .vf-messages__footer {
-      padding-bottom: max(12px, env(safe-area-inset-bottom));
-    }
-
-    /* Loader (shown until widget is actually ready) */
-    #loader {
+    /* Footer credit */
+    #footer {
       position: fixed;
-      inset: 0;
-      display: grid;
-      place-items: center;
-      background: #ffffff;
-      z-index: 10000;
-      font-size: 18px;
-      color: #444;
-      text-align: center;
-      padding: 24px;
-    }
-    #loader small { display:block; opacity:.7; margin-top:6px; }
-
-    /* Bottom credit centered */
-    #credit {
-      position: fixed;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: 8px;
-      z-index: 9999;
+      bottom: 5px;
+      right: 10px;
       font-size: 12px;
       color: #666;
-      backgrou
+      background: rgba(255,255,255,0.8);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      z-index: 9999;
+    }
+  </style>
+</head>
+<body>
+  <div id="loader">Loading chatbot...</div>
+  <div id="chat" aria-label="Intellio chat" role="application"></div>
+  <div id="footer">Powered by Ali Raza</div>
+
+  <script>
+    (function () {
+      function boot() {
+        if (!window.voiceflow?.chat?.lo
