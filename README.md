@@ -40,10 +40,26 @@
       font-family: Arial, sans-serif;
       z-index: 9999;
     }
+
+    /* Loader screen */
+    #loader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: #444;
+      z-index: 10000;
+    }
   </style>
   <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
 </head>
 <body>
+  <div id="loader">Loading chatbot...</div>
   <div id="chat" aria-label="Intellio chat" role="application"></div>
   <div id="footer">Powered by Ali Raza</div>
 
@@ -57,16 +73,4 @@
           versionID:"production",
           render:   { mode: "embedded", target: document.getElementById("chat") },
           autostart:true,
-          voice: { url: "https://runtime-api.voiceflow.com" }
-        });
-      }
-      const s = document.createElement("script");
-      s.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
-      s.async = true;
-      s.type = "text/javascript";
-      s.onload = boot;
-      document.head.appendChild(s);
-    })();
-  </script>
-</body>
-</html>
+          voice: { url: "https://runtime-api.voiceflow
