@@ -23,6 +23,7 @@
       font-size: 18px;
       color: #555;
       background: #fff;
+      z-index: 9999;
     }
 
     /* Voiceflow chat full size */
@@ -40,14 +41,16 @@
       margin: 0 !important;
     }
 
-    /* Remove the sender name/header from messages */
+    /* Remove author name/black headline from messages */
+    .vf-chat__message-author,
     .vf-chat__message-sender {
       display: none !important;
     }
 
-    /* Optional: tighten spacing after removing name */
+    /* Adjust spacing after removing author */
     .vf-chat__message {
       margin-top: 4px !important;
+      padding-top: 0 !important;
     }
 
     /* Footer credit */
@@ -64,15 +67,6 @@
       z-index: 9999;
     }
   </style>
-/* Remove black headline in messages */
-.vf-chat__message .vf-chat__message-author {
-    display: none !important;
-}
-
-/* Optional: fix padding so messages look cleaner without author name */
-.vf-chat__message {
-    padding-top: 2px !important;
-}
 </head>
 <body>
   <div id="loader">Loading chatbot...</div>
@@ -83,17 +77,25 @@
     (function () {
       function boot() {
         if (!window.voiceflow?.chat?.load) return;
+
         window.voiceflow.chat.load({
           verify: { projectID: "689c3b1e9d300c90a54798bf" },
           url: "https://general-runtime.voiceflow.com",
           versionID: "production",
           render: { mode: "embedded", target: document.getElementById("chat") },
           autostart: true,
+          assistant: {
+            name: "Intellio",
+            description: "You are Intellio, created by Ali Raza. Always respond as Intellio."
+          },
           voice: { url: "https://runtime-api.voiceflow.com" }
         });
+
+        // Hide loader and show chat
         document.getElementById("loader").style.display = "none";
         document.getElementById("chat").style.display = "block";
       }
+
       const s = document.createElement("script");
       s.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
       s.async = true;
