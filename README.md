@@ -1,141 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>StudyMate</title>
-<style>
-  html,body{margin:0;height:100%;background:#000;color:#fff;font-family:Arial, sans-serif}
-  header{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border-bottom:1px solid #222;background:#000}
-  .brand{font-weight:700}
-  .auth{display:flex;gap:8px}
-  .auth input{background:#111;border:1px solid #333;color:#fff;padding:8px;border-radius:6px}
-  .auth button,.pill{background:#111;border:1px solid #333;color:#fff;padding:8px 12px;border-radius:6px;cursor:pointer}
-  #notice{display:none;gap:10px;align-items:center;justify-content:center;background:#0a0a0a;border-bottom:1px solid #222;padding:10px}
-  #chat{height:calc(100% - 102px)}
-  footer{height:40px;display:flex;align-items:center;justify-content:center;border-top:1px solid #222;font-size:14px}
-  .hide{display:none}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intellio - AI Chat</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }
+    #chat-container { max-width: 600px; margin: 40px auto; background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    .message { padding: 10px; margin: 10px 0; border-radius: 6px; }
+    .user { background: #007bff; color: white; text-align: right; }
+    .bot { background: #f1f1f1; text-align: left; }
+    #input-container { display: flex; }
+    #user-input { flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 6px; }
+    #send-btn { margin-left: 10px; padding: 10px 20px; border: none; background: #007bff; color: white; border-radius: 6px; cursor: pointer; }
+  </style>
 </head>
 <body>
-  <header>
-    <div class="brand">StudyMate</div>
-    <div class="auth" id="authBox">
-      <input id="email" type="email" placeholder="email"/>
-      <input id="pass" type="password" placeholder="password"/>
-      <button id="login">Log in</button>
-      <button id="signup">Sign up</button>
-      <button id="logout" class="hide">Log out</button>
+  <div id="chat-container">
+    <h2>🤖 Intellio</h2>
+    <div id="chat-box"></div>
+    <div id="input-container">
+      <input type="text" id="user-input" placeholder="Type a message..." />
+      <button id="send-btn">Send</button>
     </div>
-  </header>
-
-  <div id="notice">
-    <span id="planText">Free plan</span>
-    <button id="upgrade" class="pill">Upgrade to Pro</button>
+    <p id="plan-status">🆓 Free Plan (5 messages left)</p>
+    <button onclick="upgradePlan()">Upgrade to Pro 🚀</button>
   </div>
 
-  <div id="chat"></div>
-  <footer>Powered by Voiceflow • Powered by Ali Raza</footer>
-
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
-
   <script>
-  // TODO: replace with your Firebase config (Firebase Console → Project settings)
-  const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
+    let freeMessages = 5;
 
-  const chatDiv   = document.getElementById('chat');
-  const notice    = document.getElementById('notice');
-  const planText  = document.getElementById('planText');
-  const loginBtn  = document.getElementById('login');
-  const signupBtn = document.getElementById('signup');
-  const logoutBtn = document.getElementById('logout');
-  const emailEl   = document.getElementById('email');
-  const passEl    = document.getElementById('pass');
-  const upgradeBtn= document.getElementById('upgrade');
+    async function sendMessage() {
+      const input = document.getElementById("user-input");
+      const message = input.value;
+      if (!message) return;
 
-  // Auth actions
-  loginBtn.onclick = async ()=> {
-    await auth.signInWithEmailAndPassword(emailEl.value, passEl.value);
-  };
-  signupBtn.onclick = async ()=> {
-    await auth.createUserWithEmailAndPassword(emailEl.value, passEl.value);
-  };
-  logoutBtn.onclick = async ()=> auth.signOut();
+      const chatBox = document.getElementById("chat-box");
 
-  // When user logs in/out
-  auth.onAuthStateChanged(async (user)=>{
-    if (!user) {
-      logoutBtn.classList.add('hide');
-      loginBtn.classList.remove('hide'); signupBtn.classList.remove('hide');
-      emailEl.classList.remove('hide');  passEl.classList.remove('hide');
-      planText.textContent = "Please log in to chat.";
-      notice.style.display = 'flex';
-      chatDiv.innerHTML = ''; // remove bot
-      return;
-    }
-    // UI
-    logoutBtn.classList.remove('hide');
-    loginBtn.classList.add('hide'); signupBtn.classList.add('hide');
-    emailEl.classList.add('hide');  passEl.classList.add('hide');
+      // show user message
+      chatBox.innerHTML += `<div class="message user">${message}</div>`;
+      input.value = "";
 
-    // Read plan from Firestore
-    const doc = await db.collection('users').doc(user.uid).get();
-    const plan = doc.exists ? (doc.data().plan || 'free') : 'free';
-    planText.textContent = plan === 'pro' ? "Pro plan" : "Free plan";
-    notice.style.display = 'flex';
-    upgradeBtn.style.display = plan === 'pro' ? 'none' : 'inline-block';
+      if (freeMessages <= 0) {
+        chatBox.innerHTML += `<div class="message bot">⚠️ Free plan limit reached. Upgrade to Pro 🚀</div>`;
+        return;
+      }
 
-    // Mount Voiceflow widget (embedded)
-    mountVoiceflow();
-  });
+      freeMessages--;
+      document.getElementById("plan-status").innerText = `🆓 Free Plan (${freeMessages} messages left)`;
 
-  async function mountVoiceflow(){
-    if (document.getElementById('vf-loader')) return; // already loaded
-    const s = document.createElement('script');
-    s.id = 'vf-loader';
-    s.type = 'text/javascript';
-    s.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
-    s.onload = function(){
-      window.voiceflow.chat.load({
-        verify: { projectID: '689c3b1e9d300c90a54798bf' },
-        url: 'https://general-runtime.voiceflow.com',
-        versionID: 'production',
-        render: { mode: 'embedded', target: document.getElementById('chat') },
-        theme: { primary:'#000000', secondary:'#1a1a1a', text:'#FFFFFF', font:'Arial, sans-serif' },
-        assistant: { title: 'StudyMate', description: 'How can I help you today?' }
+      // send to backend
+      let res = await fetch("http://localhost:5000/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message })
       });
-    };
-    document.body.appendChild(s);
-  }
 
-  // Upgrade to Pro (Stripe Checkout via your backend)
-  upgradeBtn.onclick = async ()=>{
-    const user = auth.currentUser;
-    if (!user) return alert('Log in first');
-    const idToken = await user.getIdToken();
-    const res = await fetch('https://YOUR_BACKEND_URL/checkout', {
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+idToken},
-      body: JSON.stringify({ priceId: 'YOUR_STRIPE_PRICE_ID' })
-    });
-    const data = await res.json();
-    if (data.url) location.href = data.url;
-    else alert('Checkout error');
-  };
+      let data = await res.json();
+      chatBox.innerHTML += `<div class="message bot">${data.reply}</div>`;
+    }
+
+    document.getElementById("send-btn").addEventListener("click", sendMessage);
+
+    function upgradePlan() {
+      alert("💳 Upgrade system coming soon! We’ll add Stripe/PayPal.");
+    }
   </script>
 </body>
 </html>
-
