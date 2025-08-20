@@ -47,7 +47,7 @@
       script.async = true;
       script.onload = function() {
         window.voiceflow.chat.load({
-          verify: { projectID: '689c3b1e9d300c90a54798bf' },
+          verify: { projectID: '689c3b1e9d300c90a54798bf' }, // replace with your Voiceflow project ID
           url: 'https://general-runtime.voiceflow.com',
           versionID: 'production',
           render: { mode: 'embedded', target: document.getElementById("chat-container") },
