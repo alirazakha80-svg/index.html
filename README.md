@@ -1,61 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Chatbot - Full Screen</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Intellio – AI Chatbot</title>
+  <meta name="color-scheme" content="light dark" />
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      background-color: #f9f9f9;
-      font-family: Arial, sans-serif;
-      overflow: hidden; /* No scrollbars */
-    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; margin: 0; }
+    body { height: 100svh; background: #ffffff; font-family: Arial, Helvetica, sans-serif; overflow: hidden; }
+    #chat { position: fixed; inset: 0; }
 
-    body {
-      display: flex;
-      flex-direction: column;
-    }
-
-    #chat-container {
-      flex: 1;
-      width: 100%;
-      height: 100vh; /* Always match viewport height */
-      display: flex;
-    }
-
-    /* Force Voiceflow iframe to behave like a full app */
-    #chat-container iframe {
-      flex: 1;
+    .vf-chat,
+    .vf-chat--embedded,
+    .vf-chat__container,
+    .vf-chat__content,
+    .vf-chat__inner,
+    .vf-chat__body {
       width: 100% !important;
       height: 100% !important;
-      border: none;
+      max-width: none !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      margin: 0 !important;
+    }
+
+    .vf-chat__messages { overscroll-behavior: contain; }
+
+    /* Footer credit */
+    #footer {
+      position: fixed;
+      bottom: 5px;
+      right: 10px;
+      font-size: 12px;
+      color: #666;
+      background: rgba(255,255,255,0.8);
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      z-index: 9999;
     }
   </style>
+  <link rel="preload" href="https://cdn.voiceflow.com/widget-next/bundle.mjs" as="script">
 </head>
 <body>
-  <div id="chat-container"></div>
+  <div id="chat" aria-label="Intellio chat" role="application"></div>
+  <div id="footer">Powered by Ali Raza</div>
 
-  <script type="text/javascript">
-    window.addEventListener("DOMContentLoaded", function() {
-      const script = document.createElement("script");
-      script.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
-      script.type = "module";
-      script.async = true;
-      script.onload = function() {
+  <script>
+    (function () {
+      function boot() {
+        if (!window.voiceflow?.chat?.load) return;
         window.voiceflow.chat.load({
-          verify: { projectID: '689c3b1e9d300c90a54798bf' }, // replace with your Voiceflow project ID
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          render: { mode: 'embedded', target: document.getElementById("chat-container") },
-          autostart: true
+          verify:   { projectID: "689c3b1e9d300c90a54798bf" },
+          url:      "https://general-runtime.voiceflow.com",
+          versionID:"production",
+          render:   { mode: "embedded", target: document.getElementById("chat") },
+          autostart:true,
+          voice: { url: "https://runtime-api.voiceflow.com" }
         });
-      };
-      document.body.appendChild(script);
-    });
+      }
+      const s = document.createElement("script");
+      s.src = "https://cdn.voiceflow.com/widget-next/bundle.mjs";
+      s.async = true;
+      s.type = "text/javascript";
+      s.onload = boot;
+      document.head.appendChild(s);
+    })();
   </script>
 </body>
 </html>
